@@ -48,7 +48,7 @@
 			"CompanyUpdateRequest": {
 				"$ref": "#/components/schemas/Pick_Company.name-or-licenseId_"
 			},
-			"Event": {
+			"Meeting": {
 				"properties": {
 					"_id": {
 						"type": "string"
@@ -68,7 +68,10 @@
 						"type": "string"
 					},
 					"attendingUsers": {
-						"type": "string"
+						"items": {
+							"type": "string"
+						},
+						"type": "array"
 					},
 					"recurring": {
 						"type": "boolean"
@@ -98,7 +101,7 @@
 				"type": "object",
 				"additionalProperties": false
 			},
-			"Pick_Event.title-or-startTime-or-endTime-or-preMeetingAgenda-or-attendingUsers-or-recurring-or-done-or-cancelled_": {
+			"Pick_Meeting.title-or-startTime-or-endTime-or-preMeetingAgenda-or-attendingUsers-or-recurring-or-done-or-cancelled_": {
 				"properties": {
 					"title": {
 						"type": "string"
@@ -115,7 +118,10 @@
 						"type": "string"
 					},
 					"attendingUsers": {
-						"type": "string"
+						"items": {
+							"type": "string"
+						},
+						"type": "array"
 					},
 					"recurring": {
 						"type": "boolean"
@@ -140,11 +146,11 @@
 				"type": "object",
 				"description": "From T, pick a set of properties whose keys are in the union K"
 			},
-			"EventCreationRequest": {
-				"$ref": "#/components/schemas/Pick_Event.title-or-startTime-or-endTime-or-preMeetingAgenda-or-attendingUsers-or-recurring-or-done-or-cancelled_"
+			"MeetingCreationRequest": {
+				"$ref": "#/components/schemas/Pick_Meeting.title-or-startTime-or-endTime-or-preMeetingAgenda-or-attendingUsers-or-recurring-or-done-or-cancelled_"
 			},
-			"EventUpdateRequest": {
-				"$ref": "#/components/schemas/Pick_Event.title-or-startTime-or-endTime-or-preMeetingAgenda-or-attendingUsers-or-recurring-or-done-or-cancelled_"
+			"MeetingUpdateRequest": {
+				"$ref": "#/components/schemas/Pick_Meeting.title-or-startTime-or-endTime-or-preMeetingAgenda-or-attendingUsers-or-recurring-or-done-or-cancelled_"
 			},
 			"License": {
 				"properties": {
@@ -248,7 +254,10 @@
 						"type": "string"
 					},
 					"calendar": {
-						"type": "string"
+						"items": {
+							"type": "string"
+						},
+						"type": "array"
 					}
 				},
 				"required": [
@@ -287,7 +296,10 @@
 						"type": "string"
 					},
 					"calendar": {
-						"type": "string"
+						"items": {
+							"type": "string"
+						},
+						"type": "array"
 					}
 				},
 				"required": [
@@ -510,7 +522,7 @@
 				]
 			}
 		},
-		"/event/all": {
+		"/meeting/all": {
 			"get": {
 				"operationId": "GetAll",
 				"responses": {
@@ -520,7 +532,7 @@
 							"application/json": {
 								"schema": {
 									"items": {
-										"$ref": "#/components/schemas/Event"
+										"$ref": "#/components/schemas/Meeting"
 									},
 									"type": "array"
 								}
@@ -532,7 +544,7 @@
 				"parameters": []
 			}
 		},
-		"/event/{id}": {
+		"/meeting/{id}": {
 			"get": {
 				"operationId": "GetById",
 				"responses": {
@@ -541,7 +553,7 @@
 						"content": {
 							"application/json": {
 								"schema": {
-									"$ref": "#/components/schemas/Event"
+									"$ref": "#/components/schemas/Meeting"
 								}
 							}
 						}
@@ -601,14 +613,14 @@
 					"content": {
 						"application/json": {
 							"schema": {
-								"$ref": "#/components/schemas/EventUpdateRequest"
+								"$ref": "#/components/schemas/MeetingUpdateRequest"
 							}
 						}
 					}
 				}
 			}
 		},
-		"/event": {
+		"/meeting": {
 			"post": {
 				"operationId": "Create",
 				"responses": {
@@ -617,7 +629,7 @@
 						"content": {
 							"application/json": {
 								"schema": {
-									"$ref": "#/components/schemas/Event"
+									"$ref": "#/components/schemas/Meeting"
 								}
 							}
 						}
@@ -630,11 +642,39 @@
 					"content": {
 						"application/json": {
 							"schema": {
-								"$ref": "#/components/schemas/EventCreationRequest"
+								"$ref": "#/components/schemas/MeetingCreationRequest"
 							}
 						}
 					}
 				}
+			}
+		},
+		"/meeting/schedule/{id}": {
+			"get": {
+				"operationId": "SmartScheduling",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/Meeting"
+								}
+							}
+						}
+					}
+				},
+				"security": [],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "id",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				]
 			}
 		},
 		"/license/all": {

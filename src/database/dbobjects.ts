@@ -25,16 +25,16 @@ interface User {
     email: string;
     companyId: string;
     status: string; // invited, active, inactive
-    calendar: string; /** should be array of strings -- see if any issues**/
+    calendar: string[]; /** should be array of strings -- see if any issues**/
 }
 
-interface Event {
+interface Meeting {
     _id: string;
     title: string;
     startTime: Date;
     endTime: Date;
     preMeetingAgenda: string;
-    attendingUsers: string; /** should be array of strings -- see if any issues**/
+    attendingUsers: string[]; /** should be array of strings -- see if any issues**/
     recurring: boolean;
     done: boolean;
     cancelled: boolean;
@@ -47,7 +47,6 @@ interface UserAccountLinks {
     accountType: string; //google, outlook, facebook
     token: string; //access token from the providers
 }
-
 
 // all schemas 
 const CompanySchema = new mongoose.Schema({
@@ -63,20 +62,18 @@ const LicenseSchema = new mongoose.Schema({
     expirationDate: Date
 });
 
-
-
 const UserAccountLinksSchema = new mongoose.Schema({
     userId: String,
     accountType: String, //google, outlook, facebook   TODO CHANGE to enum??
     token: String //access token from the providers
 });
 
-const EventSchema = new mongoose.Schema({
+const MeetingSchema = new mongoose.Schema({
     title: String,
     startTime: Date,
     endTime: Date,
     preMeetingAgenda: String,
-    attendingUsers: { type: [String], index: true },
+    attendingUsers: {type: [String], index: true },
     recurring: Boolean,
     done: Boolean,
     cancelled: Boolean
@@ -99,7 +96,7 @@ const CompanyModel = mongoose.model('Company', CompanySchema);
 const LicenseModel = mongoose.model('License', LicenseSchema);
 const UserModel = mongoose.model('User', UserSchema);
 const UserAccountLinksModel = mongoose.model('UserAccountLinks', UserAccountLinksSchema);
-const EventModel = mongoose.model('Event', EventSchema);
+const MeetingModel = mongoose.model('Meeting', MeetingSchema);
 
 
 //export models and interface so our controllers can use them
@@ -107,4 +104,4 @@ export { CompanyModel, Company }
 export { LicenseModel, License }
 export { UserModel, User}
 export { UserAccountLinksModel, UserAccountLinks }
-export { EventModel, Event }
+export { MeetingModel , Meeting }
