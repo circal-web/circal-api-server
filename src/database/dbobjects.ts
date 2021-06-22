@@ -47,9 +47,6 @@ interface Meeting {
     endTime: Date;
     preMeetingAgenda: string;
     attendingUsers: string[]; /** should be array of strings -- see if any issues**/
-    recurring: boolean;
-    done: boolean;
-    cancelled: boolean;
     status: string; // upcoming, inprog, done, cancelled
 }
 
@@ -92,9 +89,7 @@ const MeetingSchema = new mongoose.Schema({
     endTime: Date,
     preMeetingAgenda: String,
     attendingUsers: {type: [String], index: true },
-    recurring: Boolean,
-    done: Boolean,
-    cancelled: Boolean
+    status: { type: String, index: true, enumValues: ['upcoming','inprog', 'done', 'cancelled'] }
 });
 
 const UserSchema = new mongoose.Schema({
