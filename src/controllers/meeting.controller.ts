@@ -62,12 +62,11 @@ export class MeetingController extends Controller {
 	@Put('/{id}')
 	public async update(id: string, @Body() updateRequest: MeetingUpdateRequest) : Promise<void> {
 		return new Promise<void> ( async (resolve, reject) => {
-			let query = {_id: id};
 			let valuesToChange = {title: updateRequest.title, startTime: updateRequest.startTime,
 								  endTime: updateRequest.endTime, preMeetingAgenda: updateRequest.preMeetingAgenda,
 								  attendingUsers: updateRequest.attendingUsers, status: updateRequest.status};
 
-			await MeetingModel.findOneAndUpdate(query, valuesToChange);
+			await MeetingModel.findByIdAndUpdate(id, valuesToChange);
 			resolve();
 		});
 	}
