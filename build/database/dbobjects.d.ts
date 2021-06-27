@@ -42,9 +42,6 @@ interface Meeting {
     endTime: Date;
     preMeetingAgenda: string;
     attendingUsers: string[];
-    recurring: boolean;
-    done: boolean;
-    cancelled: boolean;
     status: string;
 }
 interface UserAccountLinks {

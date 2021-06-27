@@ -63,24 +63,21 @@ const models = {
             "endTime": { "dataType": "datetime", "required": true },
             "preMeetingAgenda": { "dataType": "string", "required": true },
             "attendingUsers": { "dataType": "array", "array": { "dataType": "string" }, "required": true },
-            "recurring": { "dataType": "boolean", "required": true },
-            "done": { "dataType": "boolean", "required": true },
-            "cancelled": { "dataType": "boolean", "required": true },
             "status": { "dataType": "string", "required": true },
         },
         "additionalProperties": false,
     },
-    "Pick_Meeting.title-or-startTime-or-endTime-or-preMeetingAgenda-or-attendingUsers-or-recurring-or-done-or-cancelled_": {
+    "Pick_Meeting.title-or-startTime-or-endTime-or-preMeetingAgenda-or-attendingUsers-or-status_": {
         "dataType": "refAlias",
-        "type": { "dataType": "nestedObjectLiteral", "nestedProperties": { "title": { "dataType": "string", "required": true }, "startTime": { "dataType": "datetime", "required": true }, "endTime": { "dataType": "datetime", "required": true }, "preMeetingAgenda": { "dataType": "string", "required": true }, "attendingUsers": { "dataType": "array", "array": { "dataType": "string" }, "required": true }, "recurring": { "dataType": "boolean", "required": true }, "done": { "dataType": "boolean", "required": true }, "cancelled": { "dataType": "boolean", "required": true } }, "validators": {} },
+        "type": { "dataType": "nestedObjectLiteral", "nestedProperties": { "title": { "dataType": "string", "required": true }, "startTime": { "dataType": "datetime", "required": true }, "endTime": { "dataType": "datetime", "required": true }, "preMeetingAgenda": { "dataType": "string", "required": true }, "attendingUsers": { "dataType": "array", "array": { "dataType": "string" }, "required": true }, "status": { "dataType": "string", "required": true } }, "validators": {} },
     },
     "MeetingCreationRequest": {
         "dataType": "refAlias",
-        "type": { "ref": "Pick_Meeting.title-or-startTime-or-endTime-or-preMeetingAgenda-or-attendingUsers-or-recurring-or-done-or-cancelled_", "validators": {} },
+        "type": { "ref": "Pick_Meeting.title-or-startTime-or-endTime-or-preMeetingAgenda-or-attendingUsers-or-status_", "validators": {} },
     },
     "MeetingUpdateRequest": {
         "dataType": "refAlias",
-        "type": { "ref": "Pick_Meeting.title-or-startTime-or-endTime-or-preMeetingAgenda-or-attendingUsers-or-recurring-or-done-or-cancelled_", "validators": {} },
+        "type": { "ref": "Pick_Meeting.title-or-startTime-or-endTime-or-preMeetingAgenda-or-attendingUsers-or-status_", "validators": {} },
     },
     "Task": {
         "dataType": "refObject",
@@ -136,7 +133,7 @@ const models = {
     },
     "Pick_User.role-or-firstName-or-lastName-or-email-or-companyId-or-status-or-calendar_": {
         "dataType": "refAlias",
-        "type": { "dataType": "nestedObjectLiteral", "nestedProperties": { "role": { "dataType": "string", "required": true }, "firstName": { "dataType": "string", "required": true }, "lastName": { "dataType": "string", "required": true }, "email": { "dataType": "string", "required": true }, "companyId": { "dataType": "string", "required": true }, "status": { "dataType": "string", "required": true }, "calendar": { "dataType": "array", "array": { "dataType": "string" }, "required": true } }, "validators": {} },
+        "type": { "dataType": "nestedObjectLiteral", "nestedProperties": { "status": { "dataType": "string", "required": true }, "role": { "dataType": "string", "required": true }, "firstName": { "dataType": "string", "required": true }, "lastName": { "dataType": "string", "required": true }, "email": { "dataType": "string", "required": true }, "companyId": { "dataType": "string", "required": true }, "calendar": { "dataType": "array", "array": { "dataType": "string" }, "required": true } }, "validators": {} },
     },
     "UserCreationRequest": {
         "dataType": "refAlias",

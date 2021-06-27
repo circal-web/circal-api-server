@@ -36,16 +36,18 @@ export class MeetingController extends Controller {
 		return new Promise<Meeting> ( async (resolve, reject) => {
 			const item = new MeetingModel(createRequest);
 			//another way to save and check for errors while saving
-			await item.save(undefined, (err: any, item: any) => {
+			item.save(undefined, (err: any, item: any) => {
 				if (item) {
-                    let savedItem: any = {_id: item._id, title: item.title, startTime: item.startTime,
-											endTime: item.endTime, preMeetingAgenda: item.preMeetingAgenda, attendingUsers: item.attendingUsers,
-											status: item.status};
+					let savedItem: any = {
+						_id: item._id, title: item.title, startTime: item.startTime,
+						endTime: item.endTime, preMeetingAgenda: item.preMeetingAgenda, attendingUsers: item.attendingUsers,
+						status: item.status
+					};
 					resolve(savedItem);
 				} else {
 					reject({});
 				}
-		    });  
+			});  
 		});
 	}
 

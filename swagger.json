@@ -145,15 +145,6 @@
 						},
 						"type": "array"
 					},
-					"recurring": {
-						"type": "boolean"
-					},
-					"done": {
-						"type": "boolean"
-					},
-					"cancelled": {
-						"type": "boolean"
-					},
 					"status": {
 						"type": "string"
 					}
@@ -165,15 +156,12 @@
 					"endTime",
 					"preMeetingAgenda",
 					"attendingUsers",
-					"recurring",
-					"done",
-					"cancelled",
 					"status"
 				],
 				"type": "object",
 				"additionalProperties": false
 			},
-			"Pick_Meeting.title-or-startTime-or-endTime-or-preMeetingAgenda-or-attendingUsers-or-recurring-or-done-or-cancelled_": {
+			"Pick_Meeting.title-or-startTime-or-endTime-or-preMeetingAgenda-or-attendingUsers-or-status_": {
 				"properties": {
 					"title": {
 						"type": "string"
@@ -195,14 +183,8 @@
 						},
 						"type": "array"
 					},
-					"recurring": {
-						"type": "boolean"
-					},
-					"done": {
-						"type": "boolean"
-					},
-					"cancelled": {
-						"type": "boolean"
+					"status": {
+						"type": "string"
 					}
 				},
 				"required": [
@@ -211,18 +193,16 @@
 					"endTime",
 					"preMeetingAgenda",
 					"attendingUsers",
-					"recurring",
-					"done",
-					"cancelled"
+					"status"
 				],
 				"type": "object",
 				"description": "From T, pick a set of properties whose keys are in the union K"
 			},
 			"MeetingCreationRequest": {
-				"$ref": "#/components/schemas/Pick_Meeting.title-or-startTime-or-endTime-or-preMeetingAgenda-or-attendingUsers-or-recurring-or-done-or-cancelled_"
+				"$ref": "#/components/schemas/Pick_Meeting.title-or-startTime-or-endTime-or-preMeetingAgenda-or-attendingUsers-or-status_"
 			},
 			"MeetingUpdateRequest": {
-				"$ref": "#/components/schemas/Pick_Meeting.title-or-startTime-or-endTime-or-preMeetingAgenda-or-attendingUsers-or-recurring-or-done-or-cancelled_"
+				"$ref": "#/components/schemas/Pick_Meeting.title-or-startTime-or-endTime-or-preMeetingAgenda-or-attendingUsers-or-status_"
 			},
 			"Task": {
 				"properties": {
@@ -386,6 +366,9 @@
 			},
 			"Pick_User.role-or-firstName-or-lastName-or-email-or-companyId-or-status-or-calendar_": {
 				"properties": {
+					"status": {
+						"type": "string"
+					},
 					"role": {
 						"type": "string"
 					},
@@ -401,9 +384,6 @@
 					"companyId": {
 						"type": "string"
 					},
-					"status": {
-						"type": "string"
-					},
 					"calendar": {
 						"items": {
 							"type": "string"
@@ -412,12 +392,12 @@
 					}
 				},
 				"required": [
+					"status",
 					"role",
 					"firstName",
 					"lastName",
 					"email",
 					"companyId",
-					"status",
 					"calendar"
 				],
 				"type": "object",
