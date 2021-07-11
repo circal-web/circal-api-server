@@ -1,8 +1,8 @@
 import { MeetingModel , Meeting } from '../database/dbobjects';
 import { Controller, Route, Get, Post, Body, Put, Delete } from 'tsoa';
 
-export type MeetingCreationRequest = Pick<Meeting, "title" | "startTime" | "endTime" | "preMeetingAgenda" | "attendingUsers" | "recurring" | "done" | "cancelled">;
-export type MeetingUpdateRequest = Pick<Meeting, "title" | "startTime" | "endTime" | "preMeetingAgenda" | "attendingUsers" | "recurring" | "done" | "cancelled">;
+export type MeetingCreationRequest = Pick<Meeting, "title" | "startTime" | "endTime" | "preMeetingAgenda" | "attendingUsers" | "status">;
+export type MeetingUpdateRequest = Pick<Meeting, "title" | "startTime" | "endTime" | "preMeetingAgenda" | "attendingUsers" | "status">;
 
 @Route('/meeting')
 export class MeetingController extends Controller {
@@ -13,7 +13,7 @@ export class MeetingController extends Controller {
 				let itemsFound: any = await MeetingModel.find({});
                 let items: Meeting[] = itemsFound.map((item : any) => { return {_id: item._id, title: item.title, startTime: item.startTime, 
 																	endTime: item.endTime, preMeetingAgenda: item.preMeetingAgenda, attendingUsers: item.attendingUsers, 
-                                                                    recurring: item.recurring, done: item.done, cancelled: item.cancelled}});
+                                                                    status: item.status}});
 				resolve(items);
 			} catch (err) {
 				this.setStatus(500);
@@ -36,16 +36,18 @@ export class MeetingController extends Controller {
 		return new Promise<Meeting> ( async (resolve, reject) => {
 			const item = new MeetingModel(createRequest);
 			//another way to save and check for errors while saving
-			await item.save(undefined, (err: any, item: any) => {
+			item.save(undefined, (err: any, item: any) => {
 				if (item) {
-                    let savedItem: any = {_id: item._id, title: item.title, startTime: item.startTime,
-											endTime: item.endTime, preMeetingAgenda: item.preMeetingAgenda, attendingUsers: item.attendingUsers,
-											recurring: item.recurring, done: item.done, cancelled: item.cancelled};
+					let savedItem: any = {
+						_id: item._id, title: item.title, startTime: item.startTime,
+						endTime: item.endTime, preMeetingAgenda: item.preMeetingAgenda, attendingUsers: item.attendingUsers,
+						status: item.status
+					};
 					resolve(savedItem);
 				} else {
 					reject({});
 				}
-		    });  
+			});  
 		});
 	}
 
@@ -60,13 +62,11 @@ export class MeetingController extends Controller {
 	@Put('/{id}')
 	public async update(id: string, @Body() updateRequest: MeetingUpdateRequest) : Promise<void> {
 		return new Promise<void> ( async (resolve, reject) => {
-			let query = {_id: id};
 			let valuesToChange = {title: updateRequest.title, startTime: updateRequest.startTime,
 								  endTime: updateRequest.endTime, preMeetingAgenda: updateRequest.preMeetingAgenda,
-								  attendingUsers: updateRequest.attendingUsers, recurring: updateRequest.recurring,
-								  done: updateRequest.done, cancelled: updateRequest.cancelled};
+								  attendingUsers: updateRequest.attendingUsers, status: updateRequest.status};
 
-			await MeetingModel.findOneAndUpdate(query, valuesToChange);
+			await MeetingModel.findByIdAndUpdate(id, valuesToChange);
 			resolve();
 		});
 	}

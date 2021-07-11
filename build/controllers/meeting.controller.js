@@ -20,7 +20,7 @@ let MeetingController = class MeetingController extends tsoa_1.Controller {
                 let items = itemsFound.map((item) => {
                     return { _id: item._id, title: item.title, startTime: item.startTime,
                         endTime: item.endTime, preMeetingAgenda: item.preMeetingAgenda, attendingUsers: item.attendingUsers,
-                        recurring: item.recurring, done: item.done, cancelled: item.cancelled };
+                        status: item.status };
                 });
                 resolve(items);
             }
@@ -39,11 +39,13 @@ let MeetingController = class MeetingController extends tsoa_1.Controller {
     async create(createRequest) {
         return new Promise(async (resolve, reject) => {
             const item = new dbobjects_1.MeetingModel(createRequest);
-            await item.save(undefined, (err, item) => {
+            item.save(undefined, (err, item) => {
                 if (item) {
-                    let savedItem = { _id: item._id, title: item.title, startTime: item.startTime,
+                    let savedItem = {
+                        _id: item._id, title: item.title, startTime: item.startTime,
                         endTime: item.endTime, preMeetingAgenda: item.preMeetingAgenda, attendingUsers: item.attendingUsers,
-                        recurring: item.recurring, done: item.done, cancelled: item.cancelled };
+                        status: item.status
+                    };
                     resolve(savedItem);
                 }
                 else {
@@ -60,12 +62,10 @@ let MeetingController = class MeetingController extends tsoa_1.Controller {
     }
     async update(id, updateRequest) {
         return new Promise(async (resolve, reject) => {
-            let query = { _id: id };
             let valuesToChange = { title: updateRequest.title, startTime: updateRequest.startTime,
                 endTime: updateRequest.endTime, preMeetingAgenda: updateRequest.preMeetingAgenda,
-                attendingUsers: updateRequest.attendingUsers, recurring: updateRequest.recurring,
-                done: updateRequest.done, cancelled: updateRequest.cancelled };
-            await dbobjects_1.MeetingModel.findOneAndUpdate(query, valuesToChange);
+                attendingUsers: updateRequest.attendingUsers, status: updateRequest.status };
+            await dbobjects_1.MeetingModel.findByIdAndUpdate(id, valuesToChange);
             resolve();
         });
     }

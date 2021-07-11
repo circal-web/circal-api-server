@@ -1,7 +1,7 @@
 import { Meeting } from '../database/dbobjects';
 import { Controller } from 'tsoa';
-export declare type MeetingCreationRequest = Pick<Meeting, "title" | "startTime" | "endTime" | "preMeetingAgenda" | "attendingUsers" | "recurring" | "done" | "cancelled">;
-export declare type MeetingUpdateRequest = Pick<Meeting, "title" | "startTime" | "endTime" | "preMeetingAgenda" | "attendingUsers" | "recurring" | "done" | "cancelled">;
+export declare type MeetingCreationRequest = Pick<Meeting, "title" | "startTime" | "endTime" | "preMeetingAgenda" | "attendingUsers" | "status">;
+export declare type MeetingUpdateRequest = Pick<Meeting, "title" | "startTime" | "endTime" | "preMeetingAgenda" | "attendingUsers" | "status">;
 export declare class MeetingController extends Controller {
     getAll(): Promise<Meeting[]>;
     getById(id: string): Promise<Meeting>;

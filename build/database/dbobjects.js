@@ -33,9 +33,7 @@ const MeetingSchema = new mongoose_1.default.Schema({
     endTime: Date,
     preMeetingAgenda: String,
     attendingUsers: { type: [String], index: true },
-    recurring: Boolean,
-    done: Boolean,
-    cancelled: Boolean
+    status: { type: String, index: true, enumValues: ['upcoming', 'inprog', 'done', 'cancelled'] }
 });
 const UserSchema = new mongoose_1.default.Schema({
     role: { type: String, index: true, enumValues: ['default', 'admin'] },
